@@ -7,23 +7,16 @@
   grid-gap: 20px;
 }
 
-/* Individual movie card */
-.movie-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-}
+
 
 /* Movie image */
 .movie-card img {
-  width: 100%;
+  width: 150px;
   height: auto;
   border-bottom: 1px solid #ddd;
 }
 
-.mainBody{
-  background-color: black;
-}
+
 
 /* Movie title */
 .movie-card .card-title {
@@ -74,4 +67,8 @@
 
 .view-all-button:hover {
   background-color: #0056b3;
+}
+
+.mainBody{
+  background-color: black;
 }

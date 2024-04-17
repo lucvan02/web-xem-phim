@@ -10,7 +10,7 @@ function MovieNew() {
 
     useEffect(() => {
         // Gọi hàm API để lấy danh sách phim mới nhất
-        getNewMovies(10) // Lấy 10 phim mới nhất (số lượng có thể điều chỉnh)
+        getNewMovies(20) // Lấy 10 phim mới nhất (số lượng có thể điều chỉnh)
             .then(movies => setNewMovies(movies))
             .catch(error => console.error('Error fetching new movies:', error));
     }, []);

@@ -1,12 +1,4 @@
-/* Home.css */
 
-/* General styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
-}
 
 .home-container {
   max-width: 1200px;
@@ -36,7 +28,7 @@ h2 {
   background-color: #0056b3;
 }
 
-/* Slider styles */
+
 .slider {
   position: relative;
   overflow: hidden;
@@ -73,7 +65,6 @@ h2 {
   right: 0;
 }
 
-/* Footer styles */
 .footer {
   background-color: #333;
   color: #fff;
@@ -85,7 +76,6 @@ h2 {
   margin: 0;
 }
 
-/* Header styles */
 .header {
   background-color: #333;
   color: #fff;

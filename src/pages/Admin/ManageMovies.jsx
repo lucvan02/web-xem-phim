@@ -151,10 +151,10 @@ const ManageMovies = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [newMovie, setNewMovie] = useState({
     name: '',
-    movieContent: '',
-    episodes: 0,
-    movieSchedule: 0,
-    image: '',
+    movieContent: 'Đây là nội dung phim',
+    episodes: 1,
+    movieSchedule: 2024,
+    image: 'https://m.media-amazon.com/images/I/61KYVvWl-LL._AC_UF894,1000_QL80_.jpg',
     countryId: 1,
     star: 0,
     price: 0,
@@ -243,10 +243,38 @@ const ManageMovies = () => {
         />
         <input
           type="text"
+          placeholder="Url hình ảnh"
+          value={newMovie.image}
+          onChange={(e) => setNewMovie({ ...newMovie, image: e.target.value })}
+        />
+        <input
+          type="text"
           placeholder="Nội dung phim"
           value={newMovie.movieContent}
           onChange={(e) => setNewMovie({ ...newMovie, movieContent: e.target.value })}
         />
+        <p>Số tập</p>
+        <input
+          type="number"
+          placeholder="Số tập"
+          value={newMovie.episodes}
+          onChange={(e) => setNewMovie({ ...newMovie, episodes: e.target.value })}
+        />
+        <p>Lịch chiếu</p>
+        <input
+          type="number"
+          placeholder="Lịch chiếu"
+          value={newMovie.movieSchedule}
+          onChange={(e) => setNewMovie({ ...newMovie, movieSchedule: e.target.value })}
+        />
+        <p>Quốc gia</p>
+        <input
+          type="number"
+          placeholder="Quốc gia"
+          value={newMovie.countryId}
+          onChange={(e) => setNewMovie({ ...newMovie, countryId: e.target.value })}
+        />
+
         {/* Add more input fields for other movie attributes */}
         <button onClick={handleAddMovie}>Thêm</button>
       </div>
@@ -255,14 +283,14 @@ const ManageMovies = () => {
           <tr>
             <th>ID</th>
             <th>Tên phim</th>
-            <th>Nội dung phim</th>
+            {/* <th>Nội dung phim</th> */}
             <th>Số tập</th>
             <th>Lịch chiếu</th>
             <th>Quốc gia</th>
             <th>Số sao</th>
             <th>Giá</th>
             <th>Lượt xem</th>
-            <th>Trạng thái</th>
+            {/* <th>Trạng thái</th> */}
             <th>Hành động</th>
           </tr>
         </thead>
@@ -271,14 +299,14 @@ const ManageMovies = () => {
             <tr key={movie.movieId}>
               <td>{movie.movieId}</td>
               <td>{movie.name}</td>
-              <td>{movie.movieContent}</td>
+              {/* <td>{movie.movieContent}</td> */}
               <td>{movie.episodes}</td>
               <td>{movie.movieSchedule}</td>
               <td>{movie.country.name}</td>
               <td>{movie.star}</td>
               <td>{movie.price}</td>
               <td>{movie.views}</td>
-              <td>{movie.status === 1 ? 'Active' : 'Inactive'}</td>
+              {/* <td>{movie.status === 1 ? 'Active' : 'Inactive'}</td> */}
               <td>
                 <button onClick={() => handleEdit(movie)}>Edit</button>
                 <button onClick={() => handleDelete(movie.movieId)}>Delete</button>
@@ -306,6 +334,37 @@ const ManageMovies = () => {
               value={selectedMovie.movieContent}
               onChange={(e) => setSelectedMovie({ ...selectedMovie, movieContent: e.target.value })}
             />
+             <input
+              type="text"
+              placeholder="Link hình ảnh"
+              value={selectedMovie.image}
+              onChange={(e) => setSelectedMovie({ ...selectedMovie, image: e.target.value })}
+            />
+            <input
+          type="number"
+          placeholder="Số tập"
+          value={selectedMovie.episodes}
+          onChange={(e) => setNewMovie({ ...selectedMovie, episodes: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Lịch chiếu"
+          value={selectedMovie.movieSchedule}
+          onChange={(e) => setNewMovie({ ...selectedMovie, movieSchedule: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Quốc gia"
+          value={selectedMovie.countryId}
+          onChange={(e) => setNewMovie({ ...newMovie, countryId: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Số sao" 
+          value={selectedMovie.star}
+          onChange={(e) => setNewMovie({ ...selectedMovie, star: e.target.value })}
+        />
+
             {/* Add more input fields for other movie attributes */}
             <button onClick={handleUpdateMovie}>Cập nhật</button>
           </div>

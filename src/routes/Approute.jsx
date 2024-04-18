@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import LoginComponent from '../pages/Auth/LoginComponent';
 import Home from '../pages/Home/Home';
-import Header from '../components/Header/Header';
 import MovieCategory from '../pages/MovieByCategory/MovieByCategory';
 import MovieDetail from '../pages/MovieDetail/MovieDetail';
 // import AddMovieForm from '../pages/Admin/AddMovie.jsx';
@@ -18,6 +17,8 @@ import ManageCategories from '../pages/Admin/ManageCategories';
 import ManagePersons from '../pages/Admin/ManagePersons';
 import ManageMovies from '../pages/Admin/ManageMovies';
 import Sidebar from '../pages/Admin/Sidebar';
+import ActorListSidebar from '../components/Sidebar/ActorListSidebar';
+import RandomMovieSidebar from '../components/Sidebar/RandomMovieSidebar';
 
 const AppRoutes = () => {
   return (
@@ -31,8 +32,10 @@ const AppRoutes = () => {
       <Route path="/the-loai/:categoryId" element={<CategoryMovies/>} />
       {/* <Route path="/quoc-gia/:countryId" element={<CountryMovies/>} /> */}
 
+      <Route path="/actor" element={<ActorListSidebar />} />
+      <Route path="/random" element={<RandomMovieSidebar />} />
+
       <Route path="/movie/:movieId" element={<MovieDetail />} />
-      {/* <Route path="/watch/:movieId" element={<WatchMovie/>} /> */}
       <Route path="/watch/:movieId/:episodeId" element={<WatchMovie/>} />
 
       <Route path="/allMovies" element={<MovieList />} />

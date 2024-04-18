@@ -79,25 +79,29 @@ const MovieDetail = () => {
               </div>
             </div>
 
-            <Link to={`/watch/${movieId}`} className="watch-now-button">Xem ngay</Link>
+            {/* <Link to={`/watch/${movieId}`} className="watch-now-button">Xem ngay</Link> */}
           </div>
         </div>
         <p className="content">Mô tả: {movie.movieContent}</p>
 
         <div>
-          Diễn viên:
-          <div>
-            {movie.persons.map(person => (
-              <Link to={`/dien-vien/${person.personId}`} key={person.personId}>
-                {person.name}
-              </Link>
-            ))}
-          </div>
-        </div>
+  <p>Diễn viên:</p>
+  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    {movie.persons.map(person => (
+      <div key={person.personId} style={{ margin: '10px', textAlign: 'center' }}>
+        {/* <Link to={`/dien-vien/${person.personId}`}> */}
+          <img src={person.image} alt={person.name} style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '50%' }} />
+          <span style={{ display: 'block', marginTop: '5px' }}>{person.name}</span>
+        {/* </Link> */}
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
 
       <div className='list-comment'>
-        <h2>Bình luận</h2>
+        <h2 className='text' style={{textAlign:'center'}}>Bình luận</h2>
       </div>
 
       <Footer/>

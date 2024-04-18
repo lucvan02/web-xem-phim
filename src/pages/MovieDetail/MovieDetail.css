@@ -20,10 +20,6 @@
     flex-grow: 1;
   }
 
-  p,h2{
-    color: #e0e0e0;
-  }
-
   
   .category-list,
   .episode-list {
@@ -161,7 +157,7 @@
   margin-bottom: 10px;
   text-decoration: none;
   color: #333;
-  background-color: #f2f2f2;
+  background-color: #a72020;
   padding: 5px 10px;
   border-radius: 5px;
 }
@@ -196,6 +192,16 @@
   background-color: #0056b3;
 }
 
-.mainBody{
-  background-color: black;
+.movie-detail p,h2, span{
+  color: white;
+}
+
+.movie-detail {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.list-comment{
+  padding-left: 10%;
+  padding-right: 10%;
 }

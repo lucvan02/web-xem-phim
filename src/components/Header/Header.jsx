@@ -47,8 +47,10 @@ function Header() {
                 <ul className="nav-links">
                     <li><Link to="/">Trang chủ</Link></li>
                     <li><Link to="/phim-moi">Phim mới</Link></li>
-                    <li><Link to="/phim-le">Phim lẻ</Link></li>
-                    <li><Link to="/phim-bo">Phim bộ</Link></li>
+                    {/* <li><Link to="/phim-le">Phim lẻ</Link></li>
+                    <li><Link to="/phim-bo">Phim bộ</Link></li> */}
+                    <li><Link to="/the-loai/1">Phim lẻ</Link></li>
+                    <li><Link to="/the-loai/2">Phim bộ</Link></li>
                     <li className="dropdown">
                         <span>Thể loại</span>
                         <div className="dropdown-content">

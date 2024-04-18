@@ -676,6 +676,11 @@ const ManagePersons = () => {
                     value={editPerson.name}
                     onChange={(e) => setEditPerson({ ...editPerson, name: e.target.value })}
                   />
+                  <input
+                    type="text"
+                    value={editPerson.image}
+                    onChange={(e) => setEditPerson({ ...editPerson, image: e.target.value })}
+                  />
                   {/* Other input fields for gender, dayOfBirth, image, describe, countryId */}
                   <button onClick={handleUpdatePerson}>Save</button>
                 </div>

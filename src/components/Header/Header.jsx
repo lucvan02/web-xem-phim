@@ -9,7 +9,6 @@ function Header() {
     const [categories, setCategories] = useState([]);
     const [countries, setCountries] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -34,21 +33,19 @@ function Header() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
-        window.location.href = '/';
+        window.location.href = '/login';
     };
 
     return (
         <header className="header">
             <div className="logo-container">
-                <h1 className="logo">Hayphim</h1>
+                <Link to="/"><img className='logo' src="/hayphim.png" alt="" /></Link>
             </div>
             
             <nav className="nav-container">
                 <ul className="nav-links">
                     <li><Link to="/">Trang chủ</Link></li>
                     <li><Link to="/phim-moi">Phim mới</Link></li>
-                    {/* <li><Link to="/phim-le">Phim lẻ</Link></li>
-                    <li><Link to="/phim-bo">Phim bộ</Link></li> */}
                     <li><Link to="/the-loai/1">Phim lẻ</Link></li>
                     <li><Link to="/the-loai/2">Phim bộ</Link></li>
                     <li className="dropdown">
@@ -83,31 +80,37 @@ function Header() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="button">Tìm kiếm</button>
+                {/* <button type="button">Tìm kiếm</button> */}
             </div>
 
-            <div className="user-actions">
+            <ul className="user-actions">
                 {isLoggedIn ? (
-                    <Dropdown>
-                        <Dropdown.Toggle variant="none" id="dropdown-basic">
-                            <FaUser className="user-icon" />
-                        </Dropdown.Toggle>
+                    <li className="dropdown">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="none" id="dropdown-basic">
+                                <FaUser className="user-icon" />
+                            </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="/thong-tin-tai-khoan">Thông tin tài khoản</Dropdown.Item>
-                            <Dropdown.Item href="/doi-mat-khau">Đổi mật khẩu</Dropdown.Item>
-                            <Dropdown.Item href="/phim-da-mua">Phim đã mua</Dropdown.Item>
-                            <Dropdown.Item href="/phim-da-luu">Phim đã lưu</Dropdown.Item>
-                            <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/thong-tin-tai-khoan">Thông tin tài khoản</Dropdown.Item>
+                                <Dropdown.Item href="/doi-mat-khau">Đổi mật khẩu</Dropdown.Item>
+                                <Dropdown.Item href="/phim-da-mua">Phim đã mua</Dropdown.Item>
+                                <Dropdown.Item href="/phim-da-luu">Phim đã lưu</Dropdown.Item>
+                                <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </li>
                 ) : (
-                    <div>
-                        <Link to="/login" className="login-btn">Đăng nhập</Link>
-                        <Link to="/signup" className="signup-btn">Đăng ký</Link>
-                    </div>
+                    <>
+                        <li>
+                            <Link to="/login" className="login-btn">Đăng nhập</Link>
+                        </li>
+                        <li>
+                            <Link to="/signup" className="signup-btn">Đăng ký</Link>
+                        </li>
+                    </>
                 )}
-            </div>
+            </ul>
         </header>
     );
 }

@@ -13,6 +13,10 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
+          <img src="/hayphim.png" style={{width:'100px'}} alt="" />
+          <p>Phim chất lượng cao</p>
+        </div>
+        <div className="footer-section">
           <h5>Thông tin</h5>
           <p>PTITHCM</p>
           <p>Nhóm 10 - HDV</p>
@@ -22,7 +26,7 @@ const Footer = () => {
           <ul className="footer-links">
             <li><a href="#">Trang chủ</a></li>
             <li><a href="#">Phim mới</a></li>
-            <li><a href="#">Diễn viên</a></li>
+            {/* <li><a href="#">Diễn viên</a></li> */}
           </ul>
         </div>
         <div className="footer-section">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import LoginComponent from '../pages/Auth/LoginComponent';
+import Login from '../pages/Auth/Login';
 import Home from '../pages/Home/Home';
 import MovieCategory from '../pages/MovieByCategory/MovieByCategory';
 import MovieDetail from '../pages/MovieDetail/MovieDetail';
@@ -23,7 +23,7 @@ import RandomMovieSidebar from '../components/Sidebar/RandomMovieSidebar';
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/login" element={<LoginComponent />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
       <Route path="/phim-moi" element={<MovieNew />} />
       <Route path="/phim-le" element={<MovieCategory categoryId={1} />} />

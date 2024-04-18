@@ -130,11 +130,14 @@
 }
 
 .dropdown-menu {
-    background-color: #f9f9f9;
+    background-color: #e21414;
+    word-break: break-all;
 }
 
 .dropdown-item {
     color: black;
+    display: block;
+    white-space: nowrap;
 }
 
 .user-icon {

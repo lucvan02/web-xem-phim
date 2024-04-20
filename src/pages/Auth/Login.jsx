@@ -6,6 +6,9 @@ import './Login.css';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [Repassword, setRePassword] = useState('');
+
     const [error, setError] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
@@ -46,10 +49,10 @@ const Login = () => {
                             <label htmlFor="password">Mật khẩu:</label>
                             <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        {/* <div className="row">
+                        <div className="row">
                             <label htmlFor="password">Nhập lại mật khẩu:</label>
                             <input type="password" id="password" value={Repassword} onChange={(e) => setRePassword(e.target.value)} />
-                        </div> */}
+                        </div>
                         <div className="row">
                             <button type="submit">Đăng kí</button>
                         </div>

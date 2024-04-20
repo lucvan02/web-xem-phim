@@ -4,7 +4,6 @@ import Login from '../pages/Auth/Login';
 import Home from '../pages/Home/Home';
 import MovieCategory from '../pages/MovieByCategory/MovieByCategory';
 import MovieDetail from '../pages/MovieDetail/MovieDetail';
-// import AddMovieForm from '../pages/Admin/AddMovie.jsx';
 import CategoryMovies from '../pages/CategoryMovie/CategoryMovie';
 import MovieNew from '../pages/MovieNew/MovieNew';
 import AddMovie from '../pages/Admin/AddMovie';
@@ -19,6 +18,7 @@ import ManageMovies from '../pages/Admin/ManageMovies';
 import Sidebar from '../pages/Admin/Sidebar';
 import ActorListSidebar from '../components/Sidebar/ActorListSidebar';
 import RandomMovieSidebar from '../components/Sidebar/RandomMovieSidebar';
+
 
 const AppRoutes = () => {
   return (

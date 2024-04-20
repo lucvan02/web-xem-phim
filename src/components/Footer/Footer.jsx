@@ -12,11 +12,11 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        <div className="footer-section">
+        <div className="footer-section" style={{marginLeft:'50px'}}>
           <img src="/hayphim.png" style={{width:'100px'}} alt="" />
           <p>Phim chất lượng cao</p>
         </div>
-        <div className="footer-section">
+        <div className="footer-section" >
           <h5>Thông tin</h5>
           <p>PTITHCM</p>
           <p>Nhóm 10 - HDV</p>

@@ -2,9 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #333;
+  padding: 10px;
+  background-color: #252424;
   color: white;
+  font-weight: bold;
 }
 
 .logo-container {
@@ -26,10 +27,11 @@
 
 .search-container input[type="text"] {
   padding: 10px;
-  width: 200px;
+  width: 250px;
   border: none;
   border-radius: 20px;
   outline: none;
+  margin-right: 66px;
 }
 
 .search-container button {
@@ -118,7 +120,7 @@
 
 .user-actions .dropdown .user-icon {
   font-size: 20px;
-  margin-right: 5px;
+  margin-right: 123px;
 }
 
 .user-actions .dropdown .dropdown-toggle {

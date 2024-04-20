@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+export const isLoggedIn = () => {
+    // Kiểm tra xem có token đã lưu trong localStorage hay không
+    const token = localStorage.getItem('token');
+    return !!token; // Trả về true nếu có token, ngược lại trả về false
+  };
+
 export const getAuthToken = () => {
     return window.localStorage.getItem('token');
 };

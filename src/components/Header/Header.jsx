@@ -8,7 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 function Header() {
     const [categories, setCategories] = useState([]);
     const [countries, setCountries] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -18,10 +18,10 @@ function Header() {
                 const countriesData = await getAllCountries();
                 setCategories(categoriesData);
                 setCountries(countriesData);
-                const token = localStorage.getItem('token');
-                if (token) {
-                    setIsLoggedIn(true);
-                }
+                // const token = localStorage.getItem('token');
+                // if (token) {
+                //     setIsLoggedIn(true);
+                // }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -32,7 +32,7 @@ function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        setIsLoggedIn(false);
+        // setIsLoggedIn(false);
         window.location.href = '/login';
     };
 
@@ -83,7 +83,7 @@ function Header() {
                 {/* <button type="button">Tìm kiếm</button> */}
             </div>
 
-            <ul className="user-actions">
+            {/* <ul className="user-actions">
                 {isLoggedIn ? (
                     <li className="dropdown">
                         <Dropdown>
@@ -92,7 +92,7 @@ function Header() {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/thong-tin-tai-khoan">Thông tin tài khoản</Dropdown.Item>
+                                <Dropdown.Item href="/thong-tin-tai-khoan">Tài khoản</Dropdown.Item>
                                 <Dropdown.Item href="/doi-mat-khau">Đổi mật khẩu</Dropdown.Item>
                                 <Dropdown.Item href="/phim-da-mua">Phim đã mua</Dropdown.Item>
                                 <Dropdown.Item href="/phim-da-luu">Phim đã lưu</Dropdown.Item>
@@ -110,6 +110,24 @@ function Header() {
                         </li>
                     </>
                 )}
+            </ul> */}
+
+            <ul className="user-actions">
+                    <li className="dropdown">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="none" id="dropdown-basic">
+                                <FaUser className="user-icon" />
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/thong-tin-tai-khoan">Tài khoản</Dropdown.Item>
+                                <Dropdown.Item href="/doi-mat-khau">Đổi mật khẩu</Dropdown.Item>
+                                <Dropdown.Item href="/phim-da-mua">Phim đã mua</Dropdown.Item>
+                                <Dropdown.Item href="/phim-da-luu">Phim đã lưu</Dropdown.Item>
+                                <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </li>
             </ul>
         </header>
     );

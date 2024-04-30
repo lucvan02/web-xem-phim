@@ -173,3 +173,134 @@ function AddMovie() {
 }
 
 export default AddMovie;
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { addMovie, getAllCountries, getAllCategories } from '../../Utils/api'; // Import các hàm cần thiết từ file api.js
+
+// function AddMovie() {
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         movieContent: '',
+//         episodes: 1,
+//         movieSchedule: 12,
+//         image: '',
+//         countryId: 1,
+//         categories: [],
+//     });
+//     const [countries, setCountries] = useState([]);
+//     const [categories, setCategories] = useState([]);
+
+//     useEffect(() => {
+//         const fetchCountries = async () => {
+//             try {
+//                 const countriesData = await getAllCountries();
+//                 setCountries(countriesData);
+//             } catch (error) {
+//                 console.error('Error fetching countries:', error);
+//             }
+//         };
+
+//         const fetchCategories = async () => {
+//             try {
+//                 const categoriesData = await getAllCategories();
+//                 setCategories(categoriesData);
+//             } catch (error) {
+//                 console.error('Error fetching categories:', error);
+//             }
+//         };
+
+//         fetchCountries();
+//         fetchCategories();
+//     }, []);
+
+//     const handleChange = (event) => {
+//         const { name, value } = event.target;
+//         setFormData({ ...formData, [name]: value });
+//     };
+
+//     const handleChangeCategories = (event) => {
+//         const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+//         setFormData({ ...formData, categories: selectedOptions });
+//     };
+
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
+
+//         try {
+//             await addMovie(formData);
+//             alert('Movie added successfully!');
+//             setFormData({
+//                 name: '',
+//                 movieContent: '',
+//                 episodes: 1,
+//                 movieSchedule: 12,
+//                 image: '',
+//                 countryId: 1,
+//                 categories: [],
+//             });
+//         } catch (error) {
+//             console.error('Error adding movie:', error);
+//             alert('Failed to add movie. Please try again.');
+//         }
+//     };
+
+//     return (
+//         <div>
+//             <h2>Add New Movie</h2>
+//             <form onSubmit={handleSubmit}>
+//                 {/* Các trường nhập thông tin cho bộ phim */}
+//                 <div className="form-group">
+//                     <label>Name:</label>
+//                     <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+//                 </div>
+//                 <div className="form-group">
+//                     <label>Content:</label>
+//                     <textarea name="movieContent" value={formData.movieContent} onChange={handleChange} required />
+//                 </div>
+//                 <div className="form-group">
+//                     <label>Episodes:</label>
+//                     <input type="number" name="episodes" value={formData.episodes} onChange={handleChange} required />
+//                 </div>
+//                 <div className="form-group">
+//                     <label>Schedule:</label>
+//                     <input type="number" name="movieSchedule" value={formData.movieSchedule} onChange={handleChange} required />
+//                 </div>
+//                 <div className="form-group">
+//                     <label>Image:</label>
+//                     <input type="text" name="image" value={formData.image} onChange={handleChange} required />
+//                 </div>
+//                 {/* Hiển thị danh sách các danh mục phim */}
+//                 <div className="form-group">
+//                     <label>Categories:</label>
+//                     <select multiple name="categories" value={formData.categories} onChange={handleChangeCategories}>
+//                         {categories.map(category => (
+//                             <option key={category.categoryId} value={category.categoryId}>{category.name}</option>
+//                         ))}
+//                     </select>
+//                 </div>
+//                 {/* Hiển thị danh sách các quốc gia */}
+//                 <div className="form-group">
+//                     <label>Country:</label>
+//                     <select name="countryId" value={formData.countryId} onChange={handleChange}>
+//                         {countries.map(country => (
+//                             <option key={country.countryId} value={country.countryId}>{country.name}</option>
+//                         ))}
+//                     </select>
+//                 </div>
+//                 <button type="submit">Add Movie</button>
+//             </form>
+//         </div>
+//     );
+// }
+
+// export default AddMovie;
+

@@ -18,6 +18,8 @@ import ManageMovies from '../pages/Admin/ManageMovies';
 import Sidebar from '../pages/Admin/Sidebar';
 import ActorListSidebar from '../components/Sidebar/ActorListSidebar';
 import RandomMovieSidebar from '../components/Sidebar/RandomMovieSidebar';
+import AddPersonForm from '../pages/Admin/AddPersonForm';
+import CountryMovies from '../pages/CountryMovie/CountryMovie';
 
 
 const AppRoutes = () => {
@@ -30,7 +32,7 @@ const AppRoutes = () => {
       <Route path="/phim-bo" element={<MovieCategory categoryId={2} />} />
       
       <Route path="/the-loai/:categoryId" element={<CategoryMovies/>} />
-      {/* <Route path="/quoc-gia/:countryId" element={<CountryMovies/>} /> */}
+      <Route path="/quoc-gia/:countryId" element={<CountryMovies/>} />
 
       <Route path="/actor" element={<ActorListSidebar />} />
       <Route path="/random" element={<RandomMovieSidebar />} />
@@ -43,6 +45,7 @@ const AppRoutes = () => {
       <Route path="admin/add-movie" element={<AddMovie/>} />
       <Route path="admin/add-category" element={<AddCategoryPage/>} />
       <Route path="admin/add-country" element={<AddCountryPage/>} />
+      <Route path="admin/add-person" element={<AddPersonForm/>} />
       
       <Route path="admin" element={<Sidebar/>} />
       <Route path="admin/manage-movies" element={<ManageMovies/>} />

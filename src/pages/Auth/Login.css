@@ -1,4 +1,3 @@
-/* Login.css */
 .login-wrapper {
     display: flex;
     justify-content: center;
@@ -12,7 +11,7 @@
     background-repeat: no-repeat;
 }
 
-.login-content {
+.login-wrapper .login-content {
     width: 300px;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.65);
@@ -21,27 +20,27 @@
 .if{
     color: #EEEEEE;
 }
-h3 {
+.login-wrapper h3 {
     color: #EEEEEE;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.error {
+.login-wrapper .error {
     color: red;
 }
 
-.row {
+.login-wrapper .row {
     margin-bottom: 20px;
 }
 
-label {
+.login-wrapper label {
     display: block;
     margin-bottom: 5px;
     color: #EEEEEE;
 }
 
-.login-content [type="text"],input[type="password"] {
+.login-wrapper .login-content [type="text"],input[type="password"] {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
@@ -50,7 +49,7 @@ label {
     color: #EEEEEE;
 }
 
-button[type="submit"] {
+.login-wrapper button[type="submit"] {
     width: 100%;
     padding: 10px;
     border: none;
@@ -60,12 +59,12 @@ button[type="submit"] {
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
+.login-wrapper button[type="submit"]:hover {
     background-color: #fb0964;
 }
 
-.switch-to-register,
-.switch-to-login {
+.login-wrapper .switch-to-register,
+.login-wrapper .switch-to-login {
     background-color: transparent;
     border: none;
     color: #fb176d;

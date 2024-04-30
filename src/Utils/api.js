@@ -1,10 +1,6 @@
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
-export const isLoggedIn = () => {
-    // Kiểm tra xem có token đã lưu trong localStorage hay không
-    const token = localStorage.getItem('token');
-    return !!token; // Trả về true nếu có token, ngược lại trả về false
-  };
 
 export const getAuthToken = () => {
     return window.localStorage.getItem('token');
@@ -48,21 +44,69 @@ const createAxiosRequest = async (method, url) => {
         return response.data;
     } catch (error) {
         console.error(`Error fetching ${url}:`, error);
+        // if (error.response && error.response.status === 401) {
+        //     window.alert('Phiên đăng nhập đã hết hạn. Mời đăng nhập lại.');
+        //     window.location.href = '/login';
+        // }
         throw error;
     }
 };
 
 
+// export const login = async (username, password) => {
+//     try {
+//         const response = await axios.post('/api/login/signin', { username, password });
+//         const { token } = response.data; // Lấy token từ dữ liệu nhận được
+//         setAuthHeader(token); // Lưu token vào localStorage
+//         return response.data;
+//     } catch (error) {
+//         console.error('Login Error:', error);
+//         throw error;
+//     }
+// };
+
+
+
 export const login = async (username, password) => {
     try {
         const response = await axios.post('/api/login/signin', { username, password });
-        const { token } = response.data; // Lấy token từ dữ liệu nhận được
-        setAuthHeader(token); // Lưu token vào localStorage
+        const { token } = response.data;
+        setAuthHeader(token);
+        // Giải mã token để lấy thời gian hết hạn
+        const decodedToken = jwtDecode(token);
+        const expiration = decodedToken.exp;
+        localStorage.setItem('tokenExpiration', expiration);
         return response.data;
     } catch (error) {
         console.error('Login Error:', error);
         throw error;
     }
+};
+
+
+
+// export const isLoggedIn = () => {
+//     // Kiểm tra xem có token đã lưu trong localStorage hay không
+//     const token = localStorage.getItem('token');
+//     return !!token; // Trả về true nếu có token, ngược lại trả về false
+//   };
+
+export const isLoggedIn = () => {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+        return false;
+    }
+
+    const decodedToken = jwtDecode(token); // Giải mã token để lấy thông tin payload
+    const tokenExpiration = decodedToken.exp * 1000; // Chuyển giây thành mili-giây
+
+    const currentTime = Date.now();
+    if (currentTime > tokenExpiration) {
+        return false;
+    }
+
+    return true;
 };
 
 export const getMoviesForHomePage = async (loaiPhim) => {
@@ -228,6 +272,18 @@ export const deleteCategory = async (id) => {
         });
         return response.data;
     } catch (error) {
+        throw error;
+    }
+};
+
+
+export const getCountryNameById = async (country_id) => {
+    try {
+        const token = getAuthToken();
+        const country = await createAxiosRequest('GET', `/api/country/${country_id}`, token);
+        return country.name; // Assuming the response contains a 'name' field
+    } catch (error) {
+        console.error('Error fetching country name:', error);
         throw error;
     }
 };

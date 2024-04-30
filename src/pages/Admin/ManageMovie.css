@@ -9,6 +9,11 @@
     padding-top: 20px;
     font-weight: bold;
   }
+
+  .sidebar h2{
+    color: #5751cf;
+    text-align: center;
+  }
   
   /* Style for sidebar links */
   .sidebar a {
@@ -69,6 +74,7 @@
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    
   }
   
   .close {

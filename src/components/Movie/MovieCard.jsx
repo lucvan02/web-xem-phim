@@ -10,7 +10,7 @@ const MovieCard = ({ movie }) => {
     <Card className="movie-card">
       <Link to={`/movie/${movie.movieId}`} className="movie-link">
         <div className="movie-rating">{movie.star}/5<FontAwesomeIcon icon={faStar} /> </div>
-        <div className="movie-episodes">Số tập: {movie.episodes}</div>
+        {/* <div className="movie-episodes">Số tập: {movie.episodes}</div> */}
         <div className="movie-views"><FontAwesomeIcon icon={faEye} /> {movie.views}</div>
         <Card.Img variant="top" src={movie.image} alt={movie.name} className="movie-image" />
         <Card.Body>

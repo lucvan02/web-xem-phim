@@ -30,7 +30,7 @@ export const request = async (method, url, data) => {
             headers: headers,
             data: data
         });
-        return response.data;
+        return response.data.data;
     } catch (error) {
         console.error('API Request Error:', error);
         throw error;
@@ -41,7 +41,7 @@ const createAxiosRequest = async (method, url) => {
     try {
         const token = getAuthToken();
         const response = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } });
-        return response.data;
+        return response.data.data;
     } catch (error) {
         console.error(`Error fetching ${url}:`, error);
         // if (error.response && error.response.status === 401) {
@@ -53,43 +53,59 @@ const createAxiosRequest = async (method, url) => {
 };
 
 
-// export const login = async (username, password) => {
+
+
+// export const login = async (username, password, email) => {
 //     try {
-//         const response = await axios.post('/api/login/signin', { username, password });
-//         const { token } = response.data; // Lấy token từ dữ liệu nhận được
-//         setAuthHeader(token); // Lưu token vào localStorage
-//         return response.data;
+//       const response = await axios.post('/api/login/signin', { username, password, email });
+//       const responseData = response.data;
+  
+//       if (responseData.success) {
+//         const token = responseData.data;
+//         setAuthHeader(token);
+        
+//         // Giải mã token để lấy thời gian hết hạn
+//         const decodedToken = jwtDecode(token);
+//         const expiration = decodedToken.exp;
+//         localStorage.setItem('tokenExpiration', expiration);
+  
+//         return responseData;
+//       } else {
+//         throw new Error('Invalid credentials'); // Xử lý lỗi đăng nhập không hợp lệ
+//       }
 //     } catch (error) {
-//         console.error('Login Error:', error);
-//         throw error;
+//       console.error('Login Error:', error);
+//       throw error;
 //     }
-// };
+//   };
 
 
-
-export const login = async (username, password) => {
+export const login = async (username, password, email) => {
     try {
-        const response = await axios.post('/api/login/signin', { username, password });
-        const { token } = response.data;
-        setAuthHeader(token);
-        // Giải mã token để lấy thời gian hết hạn
-        const decodedToken = jwtDecode(token);
-        const expiration = decodedToken.exp;
-        localStorage.setItem('tokenExpiration', expiration);
-        return response.data;
+        const response = await axios.post('/api/login/signin', { username, password, email });
+        const responseData = response.data;
+
+        if (responseData.success) {
+            const token = responseData.data;
+            setAuthHeader(token);
+
+            // Giải mã token để lấy thông tin người dùng
+            const userInfo = await getUserInfo(token);
+
+            // Lưu token và thông tin người dùng vào localStorage
+            localStorage.setItem('token', token);
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+            return responseData;
+        } else {
+            throw new Error('Invalid credentials'); // Xử lý lỗi đăng nhập không hợp lệ
+        }
     } catch (error) {
         console.error('Login Error:', error);
         throw error;
     }
 };
 
-
-
-// export const isLoggedIn = () => {
-//     // Kiểm tra xem có token đã lưu trong localStorage hay không
-//     const token = localStorage.getItem('token');
-//     return !!token; // Trả về true nếu có token, ngược lại trả về false
-//   };
 
 export const isLoggedIn = () => {
     const token = localStorage.getItem('token');
@@ -109,56 +125,94 @@ export const isLoggedIn = () => {
     return true;
 };
 
+
+export const getUserInfo = async () => {
+    try {
+        const token = getAuthToken();
+        const decodedToken = jwtDecode(token);
+        const id = decodedToken.sub;
+
+        const response = await axios.get(`/api/movie-user/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching user info:', error);
+        throw error;
+    }
+};
+
+export const uploadUserAvatar = async (formData) => {
+    try {
+      const response = await axios.post(`/api/movie-user/upload`, formData, {
+        headers: {
+          'Authorization': `Bearer ${getAuthToken()}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      // Cập nhật lại thông tin người dùng trong localStorage
+      const token = getAuthToken();
+      const userInfo = await getUserInfo(token);
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  
+      return response.data.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+// export const uploadUserAvatar = async (file, username) => {
+//     try {
+//         const formData = new FormData();
+//         formData.append('fileUpload', file);
+//         formData.append('username', username);
+
+//         const response = await axios.post(`/api/user/upload`, formData, {
+//             headers: {
+//                 'Authorization': `Bearer ${getAuthToken()}`,
+//                 'Content-Type': 'multipart/form-data'
+//             }
+//         });
+
+//         return response.data.data;
+//     } catch (error) {
+//         throw error;
+//     }
+// };
+
+
+export const updateUserInfo = async (username, userData) => {
+    try {
+        const response = await axios.put(`/api/movie-user/update`, { ...userData, username }, {
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Cập nhật lại thông tin người dùng trong localStorage
+        const token = getAuthToken();
+        const userInfo = await getUserInfo(token);
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+        return response.data.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
 export const getMoviesForHomePage = async (loaiPhim) => {
     try {
         const response = await request('GET', `/api/movie/get-phim-trang-chu/${loaiPhim}`);
-        return response; // Assuming the response contains the movie data
+        return response;
     } catch (error) {
         console.error('Error fetching movies for homepage:', error);
-        throw error;
-    }
-};
-
-// Thêm phim mới
-export const addMovie = async (movieData) => {
-    try {
-        const response = await axios.post('/api/movie/create', movieData, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-// Sửa thông tin phim
-export const updateMovie = async (movieId, newData) => {
-    try {
-        const response = await axios.put(`/api/movie/update?id=${movieId}`, newData, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-// Xoá phim
-export const deleteMovie = async (movieId) => {
-    try {
-        const response = await axios.delete(`/api/movie/delete?id=${movieId}`, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`
-            }
-        });
-        return response.data;
-    } catch (error) {
         throw error;
     }
 };
@@ -178,48 +232,6 @@ export const getAllCategories = async () => createAxiosRequest('GET', '/api/cate
 export const getAllPersons = async () => createAxiosRequest('GET', '/api/person/get-all');
 export const getPersonDetail = async (personId) => createAxiosRequest('GET', `/api/person/${personId}`);
 
-// Thêm hàm API để quản lý diễn viên
-export const addPerson = async (personData) => {
-    try {
-        const response = await axios.post('/api/person/create', personData, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    };
-};
-
-export const updatePerson = async (personData) => {
-    try {
-        const response = await axios.put('/api/person/update', personData, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-export const deletePerson = async (personId) => {
-    try {
-        const response = await axios.delete(`/api/person/delete?id=${personId}`, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
 
 export const getCategoryNameById = async (category_id) => {
     try {
@@ -228,50 +240,6 @@ export const getCategoryNameById = async (category_id) => {
         return category.name; // Assuming the response contains a 'name' field
     } catch (error) {
         console.error('Error fetching category name:', error);
-        throw error;
-    }
-};
-
-//thêm thể loại phim
-export const addCategory = async (categoryData) => {
-    try {
-        const response = await axios.post('/api/category/create', categoryData, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-// Sửa quốc gia
-export const updateCategory = async (id, newData) => {
-    try {
-        const response = await axios.put(`/api/category/update?id=${id}`, newData, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-// Xoá quốc gia
-export const deleteCategory = async (id) => {
-    try {
-        const response = await axios.delete(`/api/category/delete?id=${id}`, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`
-            }
-        });
-        return response.data;
-    } catch (error) {
         throw error;
     }
 };
@@ -288,46 +256,35 @@ export const getCountryNameById = async (country_id) => {
     }
 };
 
-//thêm quốc gia
-export const addCountry = async (countryData) => {
+export const saveMovieToCollection = async (movieCollection) => {
     try {
-        const response = await axios.post('/api/country/create', countryData, {
+        const token = getAuthToken();
+        const response = await axios.post('/api/movie-collection/create', movieCollection, {
             headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
         return response.data;
     } catch (error) {
+        console.error('Error saving movie to collection:', error);
         throw error;
     }
 };
 
-// Sửa quốc gia
-export const updateCountry = async (id, newData) => {
+
+// Thêm hàm mới để lấy phim đã lưu của người dùng hiện tại
+export const getAllMoviesByUser = async (username) => {
     try {
-        const response = await axios.put(`/api/country/update?id=${id}`, newData, {
+        const response = await axios.get(`/api/movie-collection/get-all-by-user?username=${username}`, {
             headers: {
                 'Authorization': `Bearer ${getAuthToken()}`,
                 'Content-Type': 'application/json'
             }
         });
-        return response.data;
+        return response.data.data;
     } catch (error) {
-        throw error;
-    }
-};
-
-// Xoá quốc gia
-export const deleteCountry = async (id) => {
-    try {
-        const response = await axios.delete(`/api/country/delete?id=${id}`, {
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`
-            }
-        });
-        return response.data;
-    } catch (error) {
+        console.error('Error fetching movies by user:', error);
         throw error;
     }
 };

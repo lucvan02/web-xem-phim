@@ -20,6 +20,7 @@ const Login = () => {
             const response = await login(username, password);
             console.log('Login success:', response);
             navigate('/');
+            // navigate('/admin/manage-movies');
         } catch (error) {
             console.error('Login error:', error);
             setError('Đăng nhập thất bại. Vui lòng thử lại.');

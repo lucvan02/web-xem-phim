@@ -38,7 +38,8 @@ const WatchMovie = () => {
         <div className='video-container'>
           <h3>{selectedEpisode.name}</h3>
           <video controls>
-            <source src={selectedEpisode.link} type="video/mp4" />
+            {/* <source src={selectedEpisode.link} type="video/mp4" /> */}
+            <source src={`${process.env.REACT_APP_UPLOAD_URL}/${selectedEpisode.link}`} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

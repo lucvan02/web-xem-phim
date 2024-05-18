@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllCountries, getAllCategories } from '../../Utils/api';
 import './Header.css';
@@ -10,6 +10,8 @@ function Header() {
     const [countries, setCountries] = useState([]);
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+
+    // const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,8 +32,36 @@ function Header() {
         fetchData();
     }, []);
 
+
+    // Sử dụng useRef để xác định khi nào click ra ngoài dropdown
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                // Kiểm tra xem click có trong dropdown hay không
+                // Nếu không, đóng dropdown
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
+
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userInfo');
         // setIsLoggedIn(false);
         window.location.href = '/login';
     };
@@ -39,7 +69,7 @@ function Header() {
     return (
         <header className="header">
             <div className="logo-container">
-                <Link to="/"><img className='logo' src="/hayphim.png" alt="" /></Link>
+                <a href="/"><img className='logo' src="/hayphim.png" alt="" /></a>
             </div>
             
             <nav className="nav-container">
@@ -83,51 +113,21 @@ function Header() {
                 {/* <button type="button">Tìm kiếm</button> */}
             </div>
 
-            {/* <ul className="user-actions">
-                {isLoggedIn ? (
-                    <li className="dropdown">
-                        <Dropdown>
-                            <Dropdown.Toggle variant="none" id="dropdown-basic">
-                                <FaUser className="user-icon" />
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/thong-tin-tai-khoan">Tài khoản</Dropdown.Item>
-                                <Dropdown.Item href="/doi-mat-khau">Đổi mật khẩu</Dropdown.Item>
-                                <Dropdown.Item href="/phim-da-mua">Phim đã mua</Dropdown.Item>
-                                <Dropdown.Item href="/phim-da-luu">Phim đã lưu</Dropdown.Item>
-                                <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </li>
-                ) : (
-                    <>
-                        <li>
-                            <Link to="/login" className="login-btn">Đăng nhập</Link>
-                        </li>
-                        <li>
-                            <Link to="/signup" className="signup-btn">Đăng ký</Link>
-                        </li>
-                    </>
-                )}
-            </ul> */}
-
             <ul className="user-actions">
-                    <li className="dropdown">
-                        <Dropdown>
-                            <Dropdown.Toggle variant="none" id="dropdown-basic">
-                                <FaUser className="user-icon" />
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/thong-tin-tai-khoan">Tài khoản</Dropdown.Item>
-                                <Dropdown.Item href="/doi-mat-khau">Đổi mật khẩu</Dropdown.Item>
-                                <Dropdown.Item href="/phim-da-mua">Phim đã mua</Dropdown.Item>
-                                <Dropdown.Item href="/phim-da-luu">Phim đã lưu</Dropdown.Item>
-                                <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </li>
+                <li ref={dropdownRef} className="dropdown">
+                    <div onClick={toggleDropdown} className="dropdown-toggle">
+                        <FaUser className="user-icon" />
+                    </div>
+                    {dropdownOpen && (
+                        <div className="dropdown-content">
+                            <Link to="/profile">Tài khoản</Link>
+                            <Link to="/change-pass">Đổi mật khẩu</Link>
+                            <Link to="/bought-movies">Phim đã mua</Link>
+                            <Link to="/saved-movies">Phim đã lưu</Link>
+                            <button onClick={handleLogout}>Đăng xuất</button>
+                        </div>
+                    )}
+                </li>
             </ul>
         </header>
     );

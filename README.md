@@ -82,3 +82,7 @@ Spring boots
             }
         };
     }
+
+
+link
+src={`${process.env.REACT_APP_UPLOAD_URL}/${selectedEpisode.link}`}

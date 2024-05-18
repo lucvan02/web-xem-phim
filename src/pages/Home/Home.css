@@ -1,3 +1,7 @@
+.mainBody {
+  background-color: #121212;
+  color: white;
+}
 
 .home-container {
   padding: 20px;
@@ -11,14 +15,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #ffd700;
+  margin-bottom: 20px;
 }
 
-/* Button to view all movies */
 .view-all-button {
-  margin-top: 20px;
   padding: 10px 20px;
   background-color: #141516;
-  color: #fff;
+  color: #ffd700;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -27,10 +31,21 @@
 
 .view-all-button:hover {
   background-color: #0056b3;
+  color: #ffffff;
 }
 
 .movie-card {
   margin-right: 10px;
+  flex: 0 0 auto; /* Ensure the cards are not shrinking */
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+
+.slick-slide {
+  padding: 0 5px;
 }
 
 @media (max-width: 768px) {
@@ -38,4 +53,3 @@
     margin-right: 0;
   }
 }
-

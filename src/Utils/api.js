@@ -101,10 +101,20 @@ export const login = async (username, password, email) => {
             throw new Error('Invalid credentials'); // Xử lý lỗi đăng nhập không hợp lệ
         }
     } catch (error) {
-        console.error('Login Error:', error);
+        if (error.response) {
+            // Lỗi từ server
+            console.error('Login Error:', error.response.data);
+        } else if (error.request) {
+            // Yêu cầu đã được gửi nhưng không có phản hồi
+            console.error('No response received:', error.request);
+        } else {
+            // Một lỗi khác đã xảy ra khi thiết lập yêu cầu
+            console.error('Error setting up request:', error.message);
+        }
         throw error;
     }
 };
+
 
 
 export const isLoggedIn = () => {
@@ -290,6 +300,49 @@ export const getAllMoviesByUser = async (username) => {
 };
 
 
+export const register = async (username, password, email) => {
+    try {
+      const response = await axios.post(`api/login/signup`, { username, password, email, roleId: 1 });
+      return response.data;
+    } catch (error) {
+        console.error('Error signup', error);
+      throw error.response.data;
+    }
+  };
+  
+  export const verifyAccount = async (email, otp, newPass) => {
+    try {
+      const response = await axios.get(`api/login/verify-account`, { params: { email, otp, newPass, roleId:1 } });
+      return response.data;
+    } catch (error) {
+        console.error('Error verify account', error);
+      throw error.response.data;
+    }
+  };
+// export const verifyAccount = async (email, otp, newPass) => {
+//     try {
+//       const response = await axios.get('/api/login/verify-account', {
+//         params: {
+//           email,
+//           otp,
+//           newPass,
+//           roleId:1
+//         },
+//       });
+//       return response.data; // Giả sử response.data chứa đối tượng ResponseData
+//     } catch (error) {
+//       throw new Error(error.response.data.message || 'OTP verification failed');
+//     }
+//   };
+
+export const resetPassword = async (username,email, newPassword) => {
+    try {
+        const response = await axios.put('/api/login/change-pass-otp', { username,email, newPassword });
+        return response.data;
+    } catch (error) {
+        console.error('API reset password error:', error);
+        return { success: false, error: 'Có lỗi xảy ra. Vui lòng thử lại.' };
+
 
 
 
@@ -323,5 +376,6 @@ export const getCommentsByMovie = async (movieId, offset = 0, pageSize = 10) => 
     } catch (error) {
         console.error('Error fetching comments by movie:', error);
         throw error;
+
     }
 };

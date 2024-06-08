@@ -76,3 +76,16 @@
 .switch-to-login:hover {
     text-decoration: underline;
 }
+
+.forgot-password {
+    font-size: 14px;
+    text-align: center;
+    float: right;
+    padding-bottom: 10px;
+
+}
+.forgot-password a {
+    color: #d5bc0b;
+    text-decoration: none;
+    font-style: italic;
+}

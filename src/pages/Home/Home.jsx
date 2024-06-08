@@ -52,9 +52,12 @@ const Home = () => {
         <div className="movie-section">
           <h2>
             Phim lẻ
-            <Button onClick={() => (window.location.href = '/phim-le')} className="view-all-button">
+            {/* <Button onClick={() => (window.location.href = '/phim-le')} className="view-all-button">
               Xem tất cả
-            </Button>
+            </Button> */}
+            <Link to="/the-loai/1">
+              <Button className="view-all-button">Xem tất cả</Button>
+            </Link>
           </h2>
           <Slider>
             {phimLe.map((movie) => (

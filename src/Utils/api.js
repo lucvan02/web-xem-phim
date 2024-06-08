@@ -195,9 +195,9 @@ export const uploadUserAvatar = async (formData) => {
 // };
 
 
-export const updateUserInfo = async (username, userData) => {
+export const updateUserInfo = async (userData) => {
     try {
-        const response = await axios.put(`/api/movie-user/update`, { ...userData, username }, {
+        const response = await axios.put(`/api/movie-user/update`, userData, {
             headers: {
                 'Authorization': `Bearer ${getAuthToken()}`,
                 'Content-Type': 'application/json'
@@ -209,7 +209,7 @@ export const updateUserInfo = async (username, userData) => {
         const userInfo = await getUserInfo(token);
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error;
     }
@@ -247,7 +247,7 @@ export const getCategoryNameById = async (category_id) => {
     try {
         const token = getAuthToken();
         const category = await createAxiosRequest('GET', `/api/category/${category_id}`, token);
-        return category.name; // Assuming the response contains a 'name' field
+        return category.name;
     } catch (error) {
         console.error('Error fetching category name:', error);
         throw error;
@@ -259,7 +259,7 @@ export const getCountryNameById = async (country_id) => {
     try {
         const token = getAuthToken();
         const country = await createAxiosRequest('GET', `/api/country/${country_id}`, token);
-        return country.name; // Assuming the response contains a 'name' field
+        return country.name;
     } catch (error) {
         console.error('Error fetching country name:', error);
         throw error;
@@ -298,6 +298,7 @@ export const getAllMoviesByUser = async (username) => {
         throw error;
     }
 };
+
 
 export const register = async (username, password, email) => {
     try {
@@ -341,5 +342,40 @@ export const resetPassword = async (username,email, newPassword) => {
     } catch (error) {
         console.error('API reset password error:', error);
         return { success: false, error: 'Có lỗi xảy ra. Vui lòng thử lại.' };
+
+
+
+
+
+
+export const createComment = async (commentData) => {
+    try {
+        const response = await axios.post('/api/comment/create', commentData, {
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating comment:', error);
+        throw error;
+    }
+};
+
+export const getCommentsByMovie = async (movieId, offset = 0, pageSize = 10) => {
+    try {
+        const token = getAuthToken();
+        const response = await axios.get(`/api/comment/get-page-by-movie?movieId=${movieId}&offset=${offset}&pageSize=${pageSize}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type': 'application/json' 
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching comments by movie:', error);
+        throw error;
+
     }
 };

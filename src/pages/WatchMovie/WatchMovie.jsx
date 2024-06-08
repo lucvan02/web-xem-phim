@@ -45,18 +45,34 @@ const WatchMovie = () => {
         </div>
       )}
 
-      <h3>Danh sách tập:</h3>
+      {/* <h3>Danh sách tập:</h3>
       <ul className='episode-list'>
         {movie.episodeList.map(episode => (
           <li key={episode.episodeId}>
-            <a href={`/watch/${movieId}/${episode.episodeId}`}>{episode.name}</a>
+            <a href={`/watch/${movieId}/${episode.episodeId}`}>{episode.episode}</a>
           </li>
         ))}
-      </ul>
+      </ul> */}
 
-      <div className='list-comment'>
+      <h3>Danh sách tập:</h3>
+      <ul className='episode-list'>
+        {movie.episodes === 1 ? (
+          <li key={movie.episodeList[0].episodeId}>
+            <a href={`/watch/${movieId}/${movie.episodeList[0].episodeId}`}>Full</a>
+          </li>
+        ) : (
+          movie.episodeList.map(episode => (
+            <li key={episode.episodeId}>
+              <a href={`/watch/${movieId}/${episode.episodeId}`}>{episode.episode}</a>
+            </li>
+          ))
+        )}
+      </ul>
+      
+
+      {/* <div className='list-comment'>
         <h2 className='text' style={{textAlign:'center'}}>Bình luận</h2>
-      </div>
+      </div> */}
       </div>
       <Footer />
     </div>

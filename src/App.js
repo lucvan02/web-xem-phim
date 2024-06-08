@@ -2,6 +2,8 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { isLoggedIn } from './Utils/api';
 import React, { useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 import AppRoutes from './routes/Approute';
 

@@ -13,6 +13,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+  padding-top: 22px;
 }
 
 .footer-section {

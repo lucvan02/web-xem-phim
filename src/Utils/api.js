@@ -382,6 +382,51 @@ export const getCommentsByMovie = async (movieId, offset = 0, pageSize = 10) => 
 
 
 
+//Bought Movies
+export const getAllMoviesBoughtByUser = async (username) => {
+    try {
+        const response = await axios.get(`/api/movie-buy/get-all-by-user?username=${username}`, {
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error fetching movies bought by user:', error);
+        throw error;
+    }
+};
+
+export const buyMovie = async (movieBuyData) => {
+    try {
+        const response = await axios.post('/api/movie-buy/create', movieBuyData, {
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error buying movie:', error);
+        throw error;
+    }
+};
+
+export const deleteMovieBuy = async (movieId, username) => {
+    try {
+        const response = await axios.delete(`/api/movie-buy/delete-by-movie-and-user?movieId=${movieId}&username=${username}`, {
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting movie buy:', error);
+        throw error;
+    }
+};
 
 
 

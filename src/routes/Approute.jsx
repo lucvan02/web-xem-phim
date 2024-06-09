@@ -13,6 +13,7 @@ import CountryMovies from '../pages/CountryMovie/CountryMovie';
 import Profile from '../pages/User/Profile/Profile';
 import SavedMoviesPage from '../pages/User/SavedMovie/SavedMoviesPage';
 import NotFound from '../components/Error/NotFound';
+import BoughtMoviesPage from '../pages/User/BoughtMovies/BoughtMovies';
 // import SignUp from '../pages/Auth/SignUp';
 import OTPVerification from '../pages/Auth/OTPVerification';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
@@ -41,7 +42,7 @@ const AppRoutes = () => {
       <Route path="/watch/:movieId/:episodeId" element={<WatchMovie/>} />
 
       <Route path="/saved-movies"  element={<SavedMoviesPage />} />
-      
+      <Route path="/bought-movies" element={<BoughtMoviesPage />} />
 
       <Route path="*" element={<NotFound />} />
 

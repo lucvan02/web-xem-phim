@@ -108,7 +108,16 @@ const MovieDetail = () => {
                         <p className="episodes">Số tập: {movie.episodes}</p>
                         <p className="schedule">Năm phát hành: {movie.movieSchedule}</p>
                         <p className="country">Quốc gia: {movie.country.name}</p>
-                        <p className="star">Đánh giá: {movie.star}/5<FontAwesomeIcon icon={faStar} /> </p> 
+                        <p className="star">
+                            {movie.star === 0 ? (
+                                <span>Chưa có đánh giá</span>
+                            ) : (
+                                <>
+                                Đánh giá: {movie.star}/5 <FontAwesomeIcon icon={faStar} />
+                                </>
+                            )}
+                            </p>
+ 
                         <p className="price">Giá mua: {movie.price}</p>
                         {/* <p className="views">Lượt xem: {movie.views}</p> */}
 

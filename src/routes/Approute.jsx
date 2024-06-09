@@ -41,6 +41,7 @@ const AppRoutes = () => {
       <Route path="/watch/:movieId/:episodeId" element={<WatchMovie/>} />
 
       <Route path="/saved-movies"  element={<SavedMoviesPage />} />
+      
 
       <Route path="*" element={<NotFound />} />
 

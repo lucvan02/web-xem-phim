@@ -342,8 +342,8 @@ export const resetPassword = async (username,email, newPassword) => {
     } catch (error) {
         console.error('API reset password error:', error);
         return { success: false, error: 'Có lỗi xảy ra. Vui lòng thử lại.' };
-
-
+    }
+};
 
 
 
@@ -377,5 +377,47 @@ export const getCommentsByMovie = async (movieId, offset = 0, pageSize = 10) => 
         console.error('Error fetching comments by movie:', error);
         throw error;
 
+    }
+};
+
+
+
+
+
+
+
+// Thêm API mua phim
+export const createMoviePurchase = async (movieBuyDTO) => {
+    try {
+        const token = getAuthToken();
+        const response = await axios.post('/api/movie-buy/create', movieBuyDTO, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating movie purchase:', error);
+        throw error;
+    }
+};
+
+export const checkMoviePurchaseExists = async (movieId, username) => {
+    try {
+        const response = await axios.get(`/api/movie-buy/check-exists-buy`, {
+            params: {
+                movieId: movieId,
+                username: username
+            },
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error checking movie purchase:', error);
+        throw error;
     }
 };

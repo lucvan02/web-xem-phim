@@ -288,7 +288,7 @@ const Profile = () => {
                 <input type="number" name="money" value={updatedUserInfo.money} onChange={handleInputChange} />
               </label> */}
               <button className="change-avatar" onClick={handleUpdateUserInfo}>Lưu</button>
-              <button onClick={() => setEditMode(false)}>Huỷ</button>
+              <button className="cancel" onClick={() => setEditMode(false)}>Huỷ</button>
             </div>
           ) : (
             <div className="user-info">

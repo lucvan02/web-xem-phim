@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getAllMoviesByCountry, getCountryNameById } from '../../Utils/api';
 import MovieCard from '../../components/Movie/MovieCard';
 import { Pagination } from 'react-bootstrap';
+
 // import './CountryMovie.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';

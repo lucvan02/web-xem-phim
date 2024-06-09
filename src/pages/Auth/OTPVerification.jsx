@@ -85,7 +85,6 @@ const OTPVerification = () => {
         alert('Xác thực thành công.');
         setTimeout(() => navigate('/login'), 1000); 
         console.error('OTP verification error:', response);
-        setError('Xác thực OTP thất bại. Vui lòng thử lại.');
       }
     } catch (error) {
       console.error('OTP verification error:', error);

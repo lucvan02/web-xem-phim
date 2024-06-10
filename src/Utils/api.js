@@ -382,6 +382,65 @@ export const getCommentsByMovie = async (movieId, offset = 0, pageSize = 10) => 
 
 
 
+
+
+
+
+// Thêm API mua phim
+export const createMoviePurchase = async (movieBuyDTO) => {
+    try {
+        const token = getAuthToken();
+        const response = await axios.post('/api/movie-buy/create', movieBuyDTO, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating movie purchase:', error);
+        throw error;
+    }
+};
+
+export const checkMoviePurchaseExists = async (movieId, username) => {
+    try {
+        const response = await axios.get(`/api/movie-buy/check-exists-buy`, {
+            params: {
+                movieId: movieId,
+                username: username
+            },
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error checking movie purchase:', error);
+        throw error;
+    }
+};
+
+//vnpay
+export const createVnpayPayment = async (paymentData) => {
+    try {
+        const token = getAuthToken();
+        const response = await axios.post('http://localhost:8081/api/payment/vnpay/create', paymentData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error creating VNPAY payment:', error);
+        throw error;
+    }
+};
+
+
+
 //Bought Movies
 export const getAllMoviesBoughtByUser = async (username) => {
     try {
@@ -431,38 +490,38 @@ export const deleteMovieBuy = async (movieId, username) => {
 
 
 
-// Thêm API mua phim
-export const createMoviePurchase = async (movieBuyDTO) => {
-    try {
-        const token = getAuthToken();
-        const response = await axios.post('/api/movie-buy/create', movieBuyDTO, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Error creating movie purchase:', error);
-        throw error;
-    }
-};
+const PAYMENT_API_URL = 'http://localhost:8081/api/payment/vnpay';
 
-export const checkMoviePurchaseExists = async (movieId, username) => {
+const paymentRequest = axios.create({
+    baseURL: PAYMENT_API_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+
+export const createPayment = (data) => paymentRequest.post('/create', data);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Thanh tìm kiếm
+export const searchMovies = async (searchTerm) => {
     try {
-        const response = await axios.get(`/api/movie-buy/check-exists-buy`, {
-            params: {
-                movieId: movieId,
-                username: username
-            },
-            headers: {
-                'Authorization': `Bearer ${getAuthToken()}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data.data;
+        const response = await request('GET', `/api/movie/get-all?searchContent=${searchTerm}`);
+        return response;
     } catch (error) {
-        console.error('Error checking movie purchase:', error);
+        console.error('Error searching movies:', error);
         throw error;
     }
 };

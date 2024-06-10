@@ -74,10 +74,7 @@ const OTPVerification = () => {
   const handleVerifyOTP = async (event) => {
     event.preventDefault();
     try {
-       //nếu newpassword không được truyền từ trang trước thì sẽ báo lỗi
-        // if (!newPassword) {
-        //   setError('Lỗi: Mật khẩu mới không được truyền từ trang trước.');
-        // return;}
+      
       const response = await verifyAccount(emaildk, otp, (newPassword?newPassword:'')); // roleId và newPass có thể truyền giá trị mặc định tại backend
       if (response.success) {
         console.log('OTP verification success:', response);

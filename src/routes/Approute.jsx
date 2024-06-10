@@ -17,6 +17,7 @@ import BoughtMoviesPage from '../pages/User/BoughtMovies/BoughtMovies';
 // import SignUp from '../pages/Auth/SignUp';
 import OTPVerification from '../pages/Auth/OTPVerification';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
+import PaymentResult from '../pages/BuyMovie/ShowMovieCard.jsx';
 const AppRoutes = () => {
   return (
     <Routes>
@@ -45,7 +46,7 @@ const AppRoutes = () => {
       <Route path="/bought-movies" element={<BoughtMoviesPage />} />
 
       <Route path="*" element={<NotFound />} />
-
+      <Route path="/payment-result" component={PaymentResult} />
     </Routes>
   );
 };

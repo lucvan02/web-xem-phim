@@ -14,7 +14,7 @@ export const setAuthHeader = (token) => {
     }
 };
 
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'http://localhost';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const request = async (method, url, data) => {
@@ -522,6 +522,38 @@ export const searchMovies = async (searchTerm) => {
         return response;
     } catch (error) {
         console.error('Error searching movies:', error);
+        throw error;
+    }
+};
+
+
+//vnpay
+export const createVNPayPayment = async (paymentData) => {
+    try {
+        const response = await axios.post('/api/payment/vnpay/create', paymentData, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+                // 'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error creating VNPay payment:', error);
+        throw error;
+    }
+};
+
+export const verifyVNPayPayment = async (paymentData) => {
+    try {
+        const response = await axios.post('/api/payment/vnpay/return', paymentData, {
+            headers: {
+                Authorization: `Bearer ${getAuthToken()}`,
+                // 'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error verifying VNPay payment:', error);
         throw error;
     }
 };

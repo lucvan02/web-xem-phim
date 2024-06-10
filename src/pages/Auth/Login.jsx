@@ -23,10 +23,17 @@ const Login = () => {
         event.preventDefault();
 
         try {
-            const response = await login(username, password);
+            let email = username;
+            if (username.includes('@')) {
+            const response = await login( '',password,email);
             console.log('Login success:', response);
+            }
+            else{
+                const response = await login(username, password);
+                console.log('Login success:', response);
+            }
             navigate('/');
-            // navigate('/admin/manage-movies');
+
         } catch (error) {
             console.error('Login error:', error);
             setError('Đăng nhập thất bại. Vui lòng thử lại.');

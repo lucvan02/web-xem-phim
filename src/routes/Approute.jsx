@@ -16,8 +16,10 @@ import NotFound from '../components/Error/NotFound';
 // import SignUp from '../pages/Auth/SignUp';
 import OTPVerification from '../pages/Auth/OTPVerification';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
+import PaymentResult from '../pages/BuyMovie/ShowMovieCard.jsx';
 import BoughtMoviesPage from '../pages/User/BoughtMovies/BoughtMovies';
 import SearchResults from '../pages/SearchMovie/SearchResults';
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -47,7 +49,7 @@ const AppRoutes = () => {
       <Route path="/search-results" element={<SearchResults />} />
 
       <Route path="*" element={<NotFound />} />
-
+      <Route path="/payment-result" component={PaymentResult} />
     </Routes>
   );
 };

@@ -6,7 +6,8 @@ import { faStar, faBookmark } from '@fortawesome/free-solid-svg-icons';
 import './MovieDetail.css';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
-
+import { createVNPayPayment, checkMoviePurchaseExists } from '../../Utils/api';
+import { Modal, Button } from 'react-bootstrap';
 
 const MovieDetail = () => {
     const { movieId } = useParams();
@@ -16,8 +17,75 @@ const MovieDetail = () => {
     const [saveMessage, setSaveMessage] = useState('');
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
+  const [isPurchased, setIsPurchased] = useState(false);
+  // const [userInfo, setUserInfo] = useState(null);
+  const user = JSON.parse(localStorage.getItem('userInfo'));
+  // useEffect(() => {
+//   const checkBought = async () => {
+//     try {
+//       // const user = await getUserInfo();
+//       // setUserInfo(user);
+//       if (user) {
+//         const exists = await checkMoviePurchaseExists(movieId, user.username);
+//         setIsPurchased(exists);
+//       }
+//     } catch (error) {
+//       console.error('Error fetching user info or checking movie purchase:', error);
+//     }
+//   };
+  
+   //   fetchUserInfo();
+  // }, [movie.movieId]);
+            
+           
+           
+          
+  const handleButtonBuyClick = (e) => {
+      e.preventDefault();
+      setShowPopup(true);
+  };
+  
+
+
+  const handlePurchaseMovie = async () => {
+    
+    try {
+      const paymentData = {
+        // bankcode:9704198526191432198,
+        amount: movie.price,
+        language: 'vn',
+        movieId: movie.movieId,
+        movieName: movie.name,
+        username: user.username,
+        email: user.email,
+        bankCode: 'NCB', 
+        
+      };
+      const response = await createVNPayPayment(paymentData);
+      window.open(response.data, '_blank');
+    } catch (error) {
+      console.error('Error purchasing movie:', error);
+    }
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
 
     useEffect(() => {
+        const checkBought = async () => {
+            try {
+              // const user = await getUserInfo();
+              // setUserInfo(user);
+              if (user) {
+                const exists = await checkMoviePurchaseExists(movieId, user.username);
+                setIsPurchased(exists);
+              }
+            } catch (error) {
+              console.error('Error fetching user info or checking movie purchase:', error);
+            }
+          };
         const fetchMovieDetail = async () => {
             try {
                 const movieDetail = await getMovieDetail(movieId);
@@ -37,7 +105,7 @@ const MovieDetail = () => {
                 console.error('Error fetching comments:', error);
             }
         };
-
+        checkBought();
         fetchMovieDetail();
         fetchComments();
     }, [movieId]);
@@ -123,6 +191,7 @@ const MovieDetail = () => {
 
                         <div className="list_cate">
                             <p>Thể loại</p>
+                            
                             <div>
                                 {movie.categories.map(category => (
                                     <Link to={`/the-loai/${category.categoryId}`} key={category.categoryId}>
@@ -131,9 +200,26 @@ const MovieDetail = () => {
                                 ))}
                             </div>
                         </div>
-
+                        <div>
+                        <Modal show={showPopup} onHide={handleClosePopup} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Yêu cầu mua phim</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Bộ phim này có giá {movie.price}đ. Bạn cần mua phim để có thể xem.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePopup}>
+            Đóng
+          </Button>
+          <Button variant="primary" onClick={handlePurchaseMovie}>
+            Mua phim
+          </Button>
+        </Modal.Footer>
+      </Modal>
+                        </div>
                     
-
+                        {(isPurchased||movie.price===0)? (
                         <div className="list_episode ah-frame-bg">
                             <div className="heading flex flex-space-auto fw-700">
                                 <p>Danh sách tập</p>
@@ -175,7 +261,9 @@ const MovieDetail = () => {
                                 </div>
                             )}
 
-                        </div>
+                        </div>) : (
+                            <button onClick={handleButtonBuyClick} className="purchase-button">Mua phim</button>
+                        )}
 
                         
                         <div>

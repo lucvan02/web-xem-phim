@@ -14,7 +14,7 @@ export const setAuthHeader = (token) => {
     }
 };
 
-axios.defaults.baseURL = 'http://localhost';
+axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const request = async (method, url, data) => {
@@ -44,41 +44,20 @@ const createAxiosRequest = async (method, url) => {
         return response.data.data;
     } catch (error) {
         console.error(`Error fetching ${url}:`, error);
-        // if (error.response && error.response.status === 401) {
-        //     window.alert('Phiên đăng nhập đã hết hạn. Mời đăng nhập lại.');
-        //     window.location.href = '/login';
-        // }
         throw error;
     }
 };
 
 
-
-
-// export const login = async (username, password, email) => {
-//     try {
-//       const response = await axios.post('/api/login/signin', { username, password, email });
-//       const responseData = response.data;
-  
-//       if (responseData.success) {
-//         const token = responseData.data;
-//         setAuthHeader(token);
-        
-//         // Giải mã token để lấy thời gian hết hạn
-//         const decodedToken = jwtDecode(token);
-//         const expiration = decodedToken.exp;
-//         localStorage.setItem('tokenExpiration', expiration);
-  
-//         return responseData;
-//       } else {
-//         throw new Error('Invalid credentials'); // Xử lý lỗi đăng nhập không hợp lệ
-//       }
-//     } catch (error) {
-//       console.error('Login Error:', error);
-//       throw error;
-//     }
-//   };
-
+export const register = async (username, password, email) => {
+    try {
+      const response = await axios.post(`api/login/signup`, { username, password, email, roleId: 1 });
+      return response.data;
+    } catch (error) {
+        console.error('Error signup', error);
+      throw error.response.data;
+    }
+  };
 
 export const login = async (username, password, email) => {
     try {
@@ -175,25 +154,6 @@ export const uploadUserAvatar = async (formData) => {
     }
   };
 
-// export const uploadUserAvatar = async (file, username) => {
-//     try {
-//         const formData = new FormData();
-//         formData.append('fileUpload', file);
-//         formData.append('username', username);
-
-//         const response = await axios.post(`/api/user/upload`, formData, {
-//             headers: {
-//                 'Authorization': `Bearer ${getAuthToken()}`,
-//                 'Content-Type': 'multipart/form-data'
-//             }
-//         });
-
-//         return response.data.data;
-//     } catch (error) {
-//         throw error;
-//     }
-// };
-
 
 export const updateUserInfo = async (userData) => {
     try {
@@ -282,6 +242,42 @@ export const saveMovieToCollection = async (movieCollection) => {
     }
 };
 
+export const checkMovieCollectionExists = async (movieId, username) => {
+    try {
+        const response = await axios.get(`/api/movie-collection/check-exists-collection`, {
+            params: {
+                movieId: movieId,
+                username: username
+            },
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error checking movie purchase:', error);
+        throw error;
+    }
+};
+
+export const deleteCollectionByMovieAndUser = async (movieId, username) => {
+    try {
+        const response = await axios.delete(`/api/movie-collection/delete-by-movie-and-user`, {
+            params: {
+                movieId: movieId,
+                username: username
+            },
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting movie collection:', error);
+        throw error;
+    }
+};
 
 // Thêm hàm mới để lấy phim đã lưu của người dùng hiện tại
 export const getAllMoviesByUser = async (username) => {
@@ -300,15 +296,7 @@ export const getAllMoviesByUser = async (username) => {
 };
 
 
-export const register = async (username, password, email) => {
-    try {
-      const response = await axios.post(`api/login/signup`, { username, password, email, roleId: 1 });
-      return response.data;
-    } catch (error) {
-        console.error('Error signup', error);
-      throw error.response.data;
-    }
-  };
+
   
   export const verifyAccount = async (email, otp, newPass) => {
     try {
@@ -382,7 +370,16 @@ export const getCommentsByMovie = async (movieId, offset = 0, pageSize = 10) => 
 
 
 
-
+// Thanh tìm kiếm
+export const searchMovies = async (searchTerm) => {
+    try {
+        const response = await request('GET', `/api/movie/get-all?searchContent=${searchTerm}`);
+        return response;
+    } catch (error) {
+        console.error('Error searching movies:', error);
+        throw error;
+    }
+};
 
 
 
@@ -422,22 +419,6 @@ export const checkMoviePurchaseExists = async (movieId, username) => {
     }
 };
 
-//vnpay
-export const createVnpayPayment = async (paymentData) => {
-    try {
-        const token = getAuthToken();
-        const response = await axios.post('http://localhost:8081/api/payment/vnpay/create', paymentData, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data.data;
-    } catch (error) {
-        console.error('Error creating VNPAY payment:', error);
-        throw error;
-    }
-};
 
 
 
@@ -488,43 +469,6 @@ export const deleteMovieBuy = async (movieId, username) => {
 };
 
 
-
-
-const PAYMENT_API_URL = 'http://localhost:8081/api/payment/vnpay';
-
-const paymentRequest = axios.create({
-    baseURL: PAYMENT_API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-
-export const createPayment = (data) => paymentRequest.post('/create', data);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Thanh tìm kiếm
-export const searchMovies = async (searchTerm) => {
-    try {
-        const response = await request('GET', `/api/movie/get-all?searchContent=${searchTerm}`);
-        return response;
-    } catch (error) {
-        console.error('Error searching movies:', error);
-        throw error;
-    }
-};
 
 
 //vnpay

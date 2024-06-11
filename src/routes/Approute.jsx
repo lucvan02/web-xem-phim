@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 import Login from '../pages/Auth/Login';
 import Home from '../pages/Home/Home';
 import MovieCategory from '../pages/MovieByCategory/MovieByCategory';
@@ -19,6 +19,7 @@ import ForgotPassword from '../pages/Auth/ForgotPassword';
 import PaymentResult from '../pages/BuyMovie/ShowMovieCard.jsx';
 import BoughtMoviesPage from '../pages/User/BoughtMovies/BoughtMovies';
 import SearchResults from '../pages/SearchMovie/SearchResults';
+import ResultBuyMovie from '../pages/BuyMovie/ResultBuyMovie.jsx';
 
 const AppRoutes = () => {
   return (
@@ -49,7 +50,8 @@ const AppRoutes = () => {
       <Route path="/search-results" element={<SearchResults />} />
 
       <Route path="*" element={<NotFound />} />
-      <Route path="/payment-result" component={PaymentResult} />
+      <Route path="/payment-result" element={<PaymentResult/>} />
+      <Route path="/api/payment/vnpay/return" element={<ResultBuyMovie />} />
     </Routes>
   );
 };

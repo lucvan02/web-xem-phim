@@ -13,10 +13,8 @@ import CountryMovies from '../pages/CountryMovie/CountryMovie';
 import Profile from '../pages/User/Profile/Profile';
 import SavedMoviesPage from '../pages/User/SavedMovie/SavedMoviesPage';
 import NotFound from '../components/Error/NotFound';
-// import SignUp from '../pages/Auth/SignUp';
 import OTPVerification from '../pages/Auth/OTPVerification';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
-import PaymentResult from '../pages/BuyMovie/ShowMovieCard.jsx';
 import BoughtMoviesPage from '../pages/User/BoughtMovies/BoughtMovies';
 import SearchResults from '../pages/SearchMovie/SearchResults';
 import ResultBuyMovie from '../pages/BuyMovie/ResultBuyMovie.jsx';
@@ -32,26 +30,19 @@ const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/phim-moi" element={<MovieNew />} />
       <Route path="/phim-le" element={<MovieCategory categoryId={1} />} />
-      <Route path="/phim-bo" element={<MovieCategory categoryId={2} />} />
-      
+      <Route path="/phim-bo" element={<MovieCategory categoryId={2} />} />  
       <Route path="/the-loai/:categoryId" element={<CategoryMovies/>} />
       <Route path="/quoc-gia/:countryId" element={<CountryMovies/>} />
-
       <Route path="/actor" element={<ActorListSidebar />} />
-      <Route path="/random" element={<RandomMovieSidebar />} />
-      
+      <Route path="/random" element={<RandomMovieSidebar />} />  
       <Route path="/profile" element={<Profile />} />
-
       <Route path="/movie/:movieId" element={<MovieDetail />} />
       <Route path="/watch/:movieId/:episodeId" element={<WatchMovie/>} />
-
       <Route path="/saved-movies"  element={<SavedMoviesPage />} />
       <Route path="/bought-movies" element={<BoughtMoviesPage />} />
       <Route path="/search-results" element={<SearchResults />} />
-
       <Route path="*" element={<NotFound />} />
-      <Route path="/payment-result" element={<PaymentResult/>} />
-      <Route path="/api/payment/vnpay/return" element={<ResultBuyMovie />} />
+      {/* <Route path="/api/payment/vnpay/return" element={<ResultBuyMovie />} /> */}
     </Routes>
   );
 };

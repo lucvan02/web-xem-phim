@@ -14,7 +14,7 @@ export const setAuthHeader = (token) => {
     }
 };
 
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'http://localhost';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const request = async (method, url, data) => {

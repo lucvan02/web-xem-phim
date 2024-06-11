@@ -49,6 +49,7 @@ const createAxiosRequest = async (method, url) => {
 };
 
 
+
 export const register = async (username, password, email) => {
     try {
       const response = await axios.post(`api/login/signup`, { username, password, email, roleId: 1 });
@@ -58,6 +59,7 @@ export const register = async (username, password, email) => {
       throw error.response.data;
     }
   };
+
 
 export const login = async (username, password, email) => {
     try {

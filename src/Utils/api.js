@@ -156,8 +156,7 @@ export const uploadUserAvatar = async (formData) => {
     }
   };
 
-
-export const updateUserInfo = async (userData) => {
+  export const updateUserInfo = async (userData) => {
     try {
         const response = await axios.put(`/api/movie-user/update`, userData, {
             headers: {
@@ -176,6 +175,7 @@ export const updateUserInfo = async (userData) => {
         throw error;
     }
 };
+
 
 
 
@@ -503,3 +503,31 @@ export const verifyVNPayPayment = async (paymentData) => {
         throw error;
     }
 };
+
+
+export const changeUserPassword = async (username, oldPass, newPass) => {
+    try {
+        const response = await axios.post('/api/movie-user/change-pass', {
+            username: username,
+            password: oldPass,
+            newPassword: newPass
+        }, {
+            headers: {
+                'Authorization': `Bearer ${getAuthToken()}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.error('Request failed with status code', error.response.status);
+            console.error('Response data:', error.response.data);
+        } else if (error.request) {
+            console.error('No response received:', error.request);
+        } else {
+            console.error('Error setting up request:', error.message);
+        }
+        throw error;
+    }
+};
+

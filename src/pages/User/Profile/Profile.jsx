@@ -275,6 +275,10 @@ const Profile = () => {
           <h2>Thông tin tài khoản</h2>
           {editMode ? (
             <div className="edit-form">
+              {/* <label>
+                <span>Tên đăng nhập:</span>
+                <input type="text" name="username" value={updatedUserInfo.username} disabled />   
+              </label> */}
               <label>
                 <span>Họ tên:</span>
                 <input type="text" name="name" value={updatedUserInfo.name} onChange={handleInputChange} />
@@ -292,9 +296,10 @@ const Profile = () => {
             </div>
           ) : (
             <div className="user-info">
+              <p><strong>Tên đăng nhập:</strong> {userInfo?.username}</p>
               <p><strong>Tên:</strong> {userInfo?.name}</p>
               <p><strong>Email:</strong> {userInfo?.email}</p>
-              <p><strong>Money:</strong> {userInfo?.money}</p>
+              {/* <p><strong>Money:</strong> {userInfo?.money}</p> */}
               <button onClick={() => setEditMode(true)}>Sửa</button>
             </div>
           )}

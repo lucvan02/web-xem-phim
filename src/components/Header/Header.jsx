@@ -142,7 +142,7 @@ function Header() {
                     {dropdownOpen && (
                         <div className="dropdown-content">
                             <Link to="/profile">Tài khoản</Link>
-                            <Link to="/change-pass">Đổi mật khẩu</Link>
+                            {/* <Link to="/change-pass">Đổi mật khẩu</Link> */}
                             <Link to="/bought-movies">Phim đã mua</Link>
                             <Link to="/saved-movies">Phim đã lưu</Link>
                             <button onClick={handleLogout}>Đăng xuất</button>

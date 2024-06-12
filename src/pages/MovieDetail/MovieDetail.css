@@ -27,6 +27,10 @@
     flex-grow: 1;
   }
 
+  p.content {
+    font-family: ui-serif;
+    font-style: italic;
+}
   
   .category-list,
   .episode-list {

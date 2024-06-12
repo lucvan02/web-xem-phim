@@ -478,6 +478,7 @@ const MovieDetail = () => {
                             </div>
                         </div>
                     </div>
+                    <p></p>
                     <p className="content">Mô tả: {movie.movieContent}</p>
                     <div>
                         <p>Diễn viên:</p>

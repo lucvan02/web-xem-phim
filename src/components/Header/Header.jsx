@@ -4,7 +4,6 @@ import { getAllCountries, getAllCategories, searchMovies } from '../../Utils/api
 import './Header.css';
 import { FaUser, FaAngleDown } from 'react-icons/fa';
 import SearchResultItem from '../../pages/SearchMovie/SearchResultItem';
-
 function Header() {
     const [categories, setCategories] = useState([]);
     const [countries, setCountries] = useState([]);
@@ -82,7 +81,7 @@ function Header() {
     return (
         <header className="header">
             <div className="logo-container">
-                <a href="/"><img className='logo' src="/hayphim.png" alt="" /></a>
+                <a href="/"><img className='logo' src="/logoPtit.png" alt="" /></a>
             </div>
             
             <nav className="nav-container">

@@ -84,5 +84,5 @@ Spring boots
     }
 
 
-link
+.env limk
 src={`${process.env.REACT_APP_UPLOAD_URL}/${selectedEpisode.link}`}
